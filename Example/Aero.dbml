@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="aero" Class="AeroDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=LEGION-5-PRO\SQLEXPRESS;Initial Catalog=aero;Integrated Security=True" SettingsObjectName="Example.Properties.Settings" SettingsPropertyName="aeroConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.Company" Member="Company">
+    <Type Name="Company">
+      <Column Name="ID_comp" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Company_Trip" Member="Trip" ThisKey="ID_comp" OtherKey="ID_comp" Type="Trip" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Pass_in_trip" Member="Pass_in_trip">
+    <Type Name="Pass_in_trip">
+      <Column Name="trip_no" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="date" Type="System.DateTime" DbType="DateTime NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_psg" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="place" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Association Name="Passenger_Pass_in_trip" Member="Passenger" ThisKey="ID_psg" OtherKey="ID_psg" Type="Passenger" IsForeignKey="true" />
+      <Association Name="Trip_Pass_in_trip" Member="Trip" ThisKey="trip_no" OtherKey="trip_no" Type="Trip" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Passenger" Member="Passenger">
+    <Type Name="Passenger">
+      <Column Name="ID_psg" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="name" Type="System.String" DbType="Char(20) NOT NULL" CanBeNull="false" />
+      <Association Name="Passenger_Pass_in_trip" Member="Pass_in_trip" ThisKey="ID_psg" OtherKey="ID_psg" Type="Pass_in_trip" />
+    </Type>
+  </Table>
+  <Table Name="dbo.Trip" Member="Trip">
+    <Type Name="Trip">
+      <Column Name="trip_no" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="ID_comp" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="plane" Type="System.String" DbType="Char(10) NOT NULL" CanBeNull="false" />
+      <Column Name="town_from" Type="System.String" DbType="Char(25) NOT NULL" CanBeNull="false" />
+      <Column Name="town_to" Type="System.String" DbType="Char(25) NOT NULL" CanBeNull="false" />
+      <Column Name="time_out" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Column Name="time_in" Type="System.DateTime" DbType="DateTime NOT NULL" CanBeNull="false" />
+      <Association Name="Trip_Pass_in_trip" Member="Pass_in_trip" ThisKey="trip_no" OtherKey="trip_no" Type="Pass_in_trip" />
+      <Association Name="Company_Trip" Member="Company" ThisKey="ID_comp" OtherKey="ID_comp" Type="Company" IsForeignKey="true" />
+    </Type>
+  </Table>
+</Database>
